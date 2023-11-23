@@ -37,13 +37,11 @@ class Login extends StatelessWidget {
               ),
             ),
             ElevatedButton(onPressed: (){
-
               if(userNameController.text.isNotEmpty && passwordController.text.isNotEmpty){
                 loginController.fetchLoginAPI(userName: userNameController.text,password: passwordController.text).then((value) {
                   print("Login response ${value.token}");
                   Get.to(Products());
                 });
-
               }else{
                 showToast(text: "Please fill all fields");
               }

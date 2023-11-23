@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../constants/api_url.dart';
 
 
-class LoginController extends GetxController{
+class LoginController extends GetConnect {
 
 
   Future<LoginModel> fetchLoginAPI({String? userName,String? password}) async {
@@ -16,8 +16,6 @@ class LoginController extends GetxController{
       "password": password
     };
     var body = json.encode(data);
-
-
     final response = await http.post(Uri.parse(AppConstants.BASE_URL + AppConstants.LOGIN_URL),
         headers: {"Content-Type": "application/json"},
         body: body);
