@@ -1,9 +1,12 @@
 import 'package:fake_store/pages/login/login.dart';
 import 'package:fake_store/pages/products/products_list.dart';
+import 'package:fake_store/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  mySharedPreference.getLoginToken();
   runApp(const MyApp());
 }
 
@@ -35,7 +38,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Products(),
+      home: MySharedPreference.loginToken != null ? Products() : Login(),
     );
   }
 }
