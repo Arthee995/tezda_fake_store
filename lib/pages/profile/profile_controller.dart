@@ -12,14 +12,14 @@ class ProfileController extends GetConnect {
   var product = UserModel().obs;
   var selectFav = false.obs;
 
-
   @override
   void onInit() {
     fetchUsersAPI();
   }
 
   Future<List<UserModel>> fetchUsersAPI() async {
-    final response = await http.get(Uri.parse(AppConstants.BASE_URL + AppConstants.PROFILE_URL),
+    final response = await http.get(
+      Uri.parse(AppConstants.BASE_URL + AppConstants.PROFILE_URL),
       headers: {"Content-Type": "application/json"},
     );
 
@@ -27,21 +27,18 @@ class ProfileController extends GetConnect {
       Iterable list = json.decode(response.body);
       users.value = list.map((model) => UserModel.fromJson(model)).toList().obs;
       print("products list ${users}");
-
     } else {
       throw Exception('Failed to load album');
     }
     return users.value;
-
   }
 
   Future<UserModel> fetchUserUpdateAPI({int? id, Map? data}) async {
     var body = json.encode(data);
     print("profile body $body");
 
-    final response = await http.put(Uri.parse(AppConstants.BASE_URL + AppConstants.PROFILE_URL +"/$id"),
-        headers: {"Content-Type": "application/json"},
-        body: body);
+    final response = await http.put(Uri.parse(AppConstants.BASE_URL + AppConstants.PROFILE_URL + "/$id"),
+        headers: {"Content-Type": "application/json"}, body: body);
     if (response.statusCode == 200) {
       return UserModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
     } else {

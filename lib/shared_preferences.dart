@@ -5,7 +5,6 @@ MySharedPreference mySharedPreference = MySharedPreference();
 class MySharedPreference {
   static String? loginToken;
 
-
   setLoginToken(String key, String data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("loginToken", data);
@@ -18,15 +17,7 @@ class MySharedPreference {
     return loginToken;
   }
 
-
-
-
-
-
-
-
-
-  clearData() async{
+  clearData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
   }

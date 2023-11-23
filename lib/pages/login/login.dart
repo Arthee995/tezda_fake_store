@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils.dart';
 import '../products/products_list.dart';
 
-
 class Login extends StatelessWidget {
   const Login({super.key});
 
@@ -19,42 +18,48 @@ class Login extends StatelessWidget {
     TextEditingController passwordController = TextEditingController();
     final LoginController loginController = Get.put(LoginController());
 
-
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: userNameController,
-              decoration: const InputDecoration(
-                label: Text("Username")
-              ),
-            ),
-            TextFormField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                  label: Text("Password")
-              ),
-            ),
-            ElevatedButton(onPressed: (){
-              if(userNameController.text.isNotEmpty && passwordController.text.isNotEmpty){
-                loginController.fetchLoginAPI(userName: userNameController.text,password: passwordController.text).then((value) async {
-                  print("Login response ${value.token}");
-                  if(value.token != null){
-                    mySharedPreference.setLoginToken("loginToken", value.token!);
-                    Get.to(Products());
-                  }else{
-                    showToast(text: "Username or password is incorrect");
-                  }
+      body: DecoratedBox(
+        decoration: boxDecoration(),
+        child: Padding(
+          padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: userNameController,
+                decoration: const InputDecoration(label: Text("Username"),
 
-                });
-              }else{
-                showToast(text: "Please fill all fields");
-              }
-            }, child: Text("Login"))
-          ],
+                ),
+              ),
+              TextFormField(
+                controller: passwordController,
+                decoration: const InputDecoration(label: Text("Password")),
+              ),
+              SizedBox(height: 30,),
+
+
+              ElevatedButton(
+                  onPressed: () {
+                    if (userNameController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                      loginController
+                          .fetchLoginAPI(userName: userNameController.text, password: passwordController.text)
+                          .then((value) async {
+                        print("Login response ${value.token}");
+                        if (value.token != null) {
+                          mySharedPreference.setLoginToken("loginToken", value.token!);
+                          Get.to(Products());
+                        } else {
+                          showToast(text: "Username or password is incorrect");
+                        }
+                      });
+                    } else {
+                      showToast(text: "Please fill all fields");
+                    }
+                  },
+                  child: Text("Login"))
+            ],
+          ),
         ),
       ),
     );
