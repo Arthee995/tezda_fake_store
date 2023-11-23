@@ -9,6 +9,7 @@ import '../../constants/api_url.dart';
 class ProductController extends GetConnect {
   var products = <ProductModel>[].obs;
   var product = ProductModel().obs;
+  var selectFav = false.obs;
 
 
   @override

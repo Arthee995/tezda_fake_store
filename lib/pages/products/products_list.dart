@@ -32,7 +32,14 @@ class Products extends StatelessWidget {
                 child: Card(child: ListTile(
                 leading: Image.network(productController.products.value[index].image.toString()),
                 title: Text(productController.products.value[index].title ?? ''),
-                subtitle: Text(productController.products.value[index].price.toString()),),
+                subtitle: Text(productController.products.value[index].price.toString()),
+                trailing: IconButton(
+                  onPressed: (){
+                    productController.selectFav.value = !productController.selectFav.value;
+                    print("productController.selectFav.value ${productController.selectFav.value}");
+                  },
+                  icon: Obx(() => Icon(productController.selectFav.value == true ? Icons.favorite : Icons.favorite_border)),
+                ),),
                 ));
               },
             ),)

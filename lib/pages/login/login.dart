@@ -40,7 +40,13 @@ class Login extends StatelessWidget {
               if(userNameController.text.isNotEmpty && passwordController.text.isNotEmpty){
                 loginController.fetchLoginAPI(userName: userNameController.text,password: passwordController.text).then((value) {
                   print("Login response ${value.token}");
-                  Get.to(Products());
+                  if(value.token != null){
+
+                    Get.to(Products());
+                  }else{
+                    showToast(text: "Username or password is incorrect");
+                  }
+
                 });
               }else{
                 showToast(text: "Please fill all fields");
